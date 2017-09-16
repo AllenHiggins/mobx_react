@@ -22,6 +22,11 @@ class App extends Component {
           <input type="text" placeholder="Enter Text" ref={input => this.brid = input} />
           <button>Enter</button>
         </form>
+        <ul>
+          {BridStore.brids.map((brid, index) => (
+             <li key={index}>{brid}</li>
+          ))}
+        </ul>
       </div>
     );
   }
