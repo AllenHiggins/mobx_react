@@ -12,5 +12,4 @@ class BridStore {
   }
 }
 
-const store = new BridStore();
-export default store;
+export default new BridStore();

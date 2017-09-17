@@ -4,11 +4,17 @@ import './App.css';
 
 import {inject, observer} from 'mobx-react';
 
-@inject('BridStore')
+
+@inject('BridStore', 'userStore')
 @observer
 class App extends Component {
+
+
+
   render() {
-    const { BridStore } = this.props;
+    const { BridStore, userStore } = this.props;
+
+
     return (
       <div className="App">
         <div className="App-header">
@@ -16,6 +22,9 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
         <div>
+
+          {this.userLoggedIn()}
+
           <h2>You have {BridStore.bridCount} birds.</h2>
         </div>
         <form onSubmit={this.handleSubmite.bind(this)}>
@@ -29,6 +38,29 @@ class App extends Component {
         </ul>
       </div>
     );
+  }
+
+  userLoggedIn(){
+    if(this.props.userStore.firstName === ''){
+      return(
+          <div>
+            <h1>Need User First Name</h1>
+            <input type="text" ref='name' />
+            <button onClick={this.setName.bind(this)}>Enter</button>
+          </div>
+      );
+    }else{
+      return(<h1>User Name : {this.props.userStore.fullName}</h1>);
+    }
+  }
+
+  setName = (props) => {
+    const {name} = this.refs;
+
+    if(name.value != ''){
+      this.props.userStore.firstName = name.value;
+      this.userLoggedIn();
+   }
   }
 
   handleSubmite = (event) => {
